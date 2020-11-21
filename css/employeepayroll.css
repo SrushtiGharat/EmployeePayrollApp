@@ -47,6 +47,7 @@ header
     border-radius: 8px;
     margin-bottom: 20px;
     margin-top: 20px;
+    width: auto;
 }
 .form-head 
 {
