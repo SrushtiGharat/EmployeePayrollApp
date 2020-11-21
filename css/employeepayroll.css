@@ -100,5 +100,15 @@ header
     font: normal normal normal 18px/24px Roboto;
     color: #42515F;
 }
+select
+{
+    border: 1px solid #BDBDBD;
+    border-radius: 3px;
+    padding: 12px;
+    resize: vertical;
+    font: normal normal normal 16px Roboto;
+    color: #42515f;
+    background-color: transparent;
+}
 
  
