@@ -90,8 +90,15 @@ header
     display: flex;
     flex-direction: row;
     align-items: center;
+    padding: 12px 12px 12px 0; 
     margin-right: 30px;
-    padding: 12px 12px 12px 0;
+}
+.text
+{
+    padding: 12px 12px 12px 0; 
+    margin-right: 35px;
+    font: normal normal normal 18px/24px Roboto;
+    color: #42515F;
 }
 
  
