@@ -6,12 +6,24 @@ const output=document.querySelector('.salary-output-text');
         output.textContent=salary.value;
     })
 
+const name=document.querySelector('#name');
+const nameError=document.querySelector('.name-error');
+        name.addEventListener('input', function(){
+            let nameRegex= new RegExp(/^[A-Z][a-z]{2,}$/);
+            if(nameRegex.test(name.value))
+            nameError.textContent="";
+            else
+            nameError.textContent="Name is Invalid";
+        })
+
+    
 let employeePayrollArray = new Array();
 //Store Employee details
 function save()
 {
         let employee = new Employee();
 
+    try{
         employee.Name = document.getElementById('name').value;    
         let profile = document.getElementsByName('profile');       
         for(i = 0; i < profile.length; i++)
@@ -38,4 +50,11 @@ function save()
         employee.StartDate = startDate;
         employee.Notes = document.querySelector('#notes').value;
         employeePayrollArray.push(employee);
+
+        alert("Employee added successfully!");
+    }
+    catch(e)
+    {
+        alert(e);
+    }
 }

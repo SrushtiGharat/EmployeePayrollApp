@@ -150,3 +150,8 @@ textarea
 {
     margin-right: 30px;
 }
+error-output{
+    font-size: 12px;
+    font-style: italic;
+    color: red;
+}
