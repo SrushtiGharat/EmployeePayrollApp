@@ -64,6 +64,7 @@ function CreateEmployeeObject()
     }
 }
 
+// Save data to local HTML Storage
 function SaveToLocalStorage(employeeData)
 {
     let employeeList = JSON.parse(localStorage.getItem("EmployeePayrollList"));
@@ -77,4 +78,20 @@ function SaveToLocalStorage(employeeData)
     }
     localStorage.setItem("EmployeePayrollList",JSON.stringify(employeeList));
     alert("Employee added successfully!");
+}
+
+//Reset form on click of reset button
+function Reset()
+{
+    document.querySelector('#name').value = '';
+    document.querySelector('.name-error').textContent = '';
+    document.querySelectorAll('[name=profile]').forEach(a=>{a.checked = false;});
+    document.querySelectorAll('[name=gender]').forEach(a=>{a.checked = false;});
+    document.querySelectorAll('[name=department]').forEach(a=>{a.checked = false;});
+    document.querySelector('#salary').value = '400000';
+    document.querySelector('.salary-output-text').value='400000';
+    document.querySelector('#day').value = '1';
+    document.querySelector('#month').value = 'January';
+    document.querySelector('#year').value = '2016';
+    document.querySelector('#notes').value = '';
 }
