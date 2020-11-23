@@ -155,3 +155,54 @@ error-output{
     font-style: italic;
     color: red;
 }
+.main-content
+{
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 80px);
+    padding: 30px 0 10px;
+    box-sizing: border-box;
+    align-items: center;
+}
+.header-content
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    padding-bottom: 25px;
+}
+.header-text
+{
+    text-align: left;
+    font: normal normal bold 28px/25px Roboto;
+    letter-spacing: 0px;
+    color: #42515F;
+    opacity: 1;
+}
+.emp-count
+{
+    background-color: #82A70C;
+    color: #ffffff;
+    border-radius: 42%;
+    font-size: 16px;
+    width: 26px;
+    text-align: center;
+    display: inline-block;
+    margin-left: 10px;
+}
+.add-button
+{
+    font: normal normal normal 22px/29px Roboto;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    background-color: #82A70C;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 18px;
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+}
