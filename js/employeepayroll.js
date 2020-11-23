@@ -6,6 +6,7 @@ const output=document.querySelector('.salary-output-text');
         output.textContent=salary.value;
     })
 
+//Event listener for name field
 const name=document.querySelector('#name');
 const nameError=document.querySelector('.name-error');
         name.addEventListener('input', function(){
@@ -16,14 +17,19 @@ const nameError=document.querySelector('.name-error');
             nameError.textContent="Name is Invalid";
         })
 
-    
-let employeePayrollArray = new Array();
-//Store Employee details
+//Save Employee details
 function save()
 {
-        let employee = new Employee();
+     let employeeData = CreateEmployeeObject();
+     SaveToLocalStorage(employeeData);       
+}
 
+//Create an object of Employee class
+function CreateEmployeeObject()
+{
     try{
+
+        let employee = new Employee();
         employee.Name = document.getElementById('name').value;    
         let profile = document.getElementsByName('profile');       
         for(i = 0; i < profile.length; i++)
@@ -49,12 +55,26 @@ function save()
         let startDate = new Date(document.querySelector('#year').value+"-"+document.querySelector('#month').value+"-"+document.querySelector('#day').value);
         employee.StartDate = startDate;
         employee.Notes = document.querySelector('#notes').value;
-        employeePayrollArray.push(employee);
 
-        alert("Employee added successfully!");
+        return employee;
     }
     catch(e)
     {
         alert(e);
     }
+}
+
+function SaveToLocalStorage(employeeData)
+{
+    let employeeList = JSON.parse(localStorage.getItem("EmployeePayrollList"));
+    if(employeeList != undefined)
+    {
+        employeeList.push(employeeData);
+    }
+    else
+    {
+        employeeList = [employeeData];
+    }
+    localStorage.setItem("EmployeePayrollList",JSON.stringify(employeeList));
+    alert("Employee added successfully!");
 }
