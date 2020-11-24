@@ -20,7 +20,6 @@ function CreateInnerHTML()
 {
     const headerHTML = "<tr><th></th><th>Name</th><th>Gender</th><th>Department</th><th>Salary</th><th>Start Date</th><th>Actions</th></tr>"
     let innerHTML = `${headerHTML}`;
-    if(employeePayrollList.length == 0) return;
     for(const employeePayrollData of employeePayrollList)
     {
         innerHTML = `${innerHTML}       
@@ -32,12 +31,24 @@ function CreateInnerHTML()
         <td>${employeePayrollData._salary}</td>
         <td>${GetDate(employeePayrollData._startDate)}</td>
         <td>
-            <img id="act" name="${employeePayrollData._id}" onclick="remove(this)" alt="delete" src="../assets/icons/delete-black-18dp.svg">
-            <img id="act" name="${employeePayrollData._id}" onclick="update(this)" alt="edit" src="../assets/icons/create-black-18dp.svg">
+            <img id="${employeePayrollData._id}" onclick="remove(this)" alt="delete" src="../assets/icons/delete-black-18dp.svg">
+            <img id="${employeePayrollData._id}" onclick="update(this)" alt="edit" src="../assets/icons/create-black-18dp.svg">
         </td>
         </tr>`;
     }
     document.querySelector('#table').innerHTML = innerHTML;
+}
+
+//Remove employee from table
+function remove(node)
+{
+    let empData = employeePayrollList.find(emp=>emp._id == node._id);
+    if(!empData) return;
+    let index = employeePayrollList.map(emp=>emp._id).indexOf(empData._id);
+    employeePayrollList.splice(index,1);
+    localStorage.setItem('EmployeePayrollList',JSON.stringify(employeePayrollList));
+    document.querySelector('.emp-count').textContent = employeePayrollList.length;
+    CreateInnerHTML();
 }
 
 //Get departments for a employee to display on HTML page

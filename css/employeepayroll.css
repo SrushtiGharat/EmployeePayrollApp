@@ -254,11 +254,12 @@ td
     width: fit-content;
     opacity: 1;
 }
+
 td:not(:first-child) > img 
 {    
     margin-right: 40px;
 }
-#act
+img
 {
     cursor: pointer;
 }
