@@ -5,8 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="../css/employeepayroll.css">
-        <script defer src="../js/employeepayroll.js"></script>
-        <script defer src="../js/Employee.js"></script>
         <title>Employee Payroll Home Page</title>
     </head>
     <body>
@@ -24,35 +22,14 @@
                 <div class="header-text">Employee Details<div class="emp-count">1</div>
                 </div>
                 <a href="../pages/AddEmployeeForm.html" class="add-button">
-                    <img src ="../assets/icons/add-24px.svg" alt="add icon">Add User</a>
+                   <img src ="../assets/icons/add-24px.svg" alt="add icon">Add User</a>
                 </a>
             </div>
-            <table id="table" class="table">
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Department</th>
-                    <th>Salary</th>
-                    <th>Start Date</th>
-                    <th>Actions</th>
-                </tr>
-                <tr>
-                    <td><img class="profile" alt = "" src="../assets/profile-images/Ellipse -7.png"></td>
-                    <td>Srushti Gharat</td>
-                    <td>Female</td>
-                    <td>
-                        <div class="dept-label">HR</div>
-                        <div class="dept-label">Finance</div>
-                    </td>
-                    <td>300000</td>
-                    <td>18 February 2020</td>
-                    <td>
-                        <img id="act" onclick="remove(this)" alt="delete" src="../assets/icons/delete-black-18dp.svg">
-                        <img id="act" onclick="update(this)" alt="edit" src="../assets/icons/create-black-18dp.svg">
-                    </td>
-                </tr>
+            <table id="table" class="table">           
             </table>
-        </div>       
+        </div> 
+        <script defer src="../js/AddEmployee.js"></script>
+        <script defer src="../js/Employee.js"></script>
+        <script defer src="../js/HomePage.js"></script>      
     </body>
 </html>

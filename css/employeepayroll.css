@@ -201,7 +201,8 @@ error-output{
     background-color: #82A70C;
     border: none;
     border-radius: 5px;
-    padding: 5px 18px;
+    align-items: left;
+    padding: 5px 10px;
     outline: none;
     cursor: pointer;
     text-decoration: none;
@@ -224,6 +225,10 @@ th
     background: #42515F 0% 0% no-repeat padding-box;
     min-height: 50px;
     padding: 8px;   
+}
+th:not(:first-child)
+{
+    min-width: 80px;
 }
 td
 {
@@ -249,8 +254,8 @@ td
     width: fit-content;
     opacity: 1;
 }
-td img:first-child
-{
+td:not(:first-child) > img 
+{    
     margin-right: 40px;
 }
 #act
