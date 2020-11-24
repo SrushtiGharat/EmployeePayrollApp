@@ -7,7 +7,7 @@ class Employee
         if(regex_Name.test(Name))
             this._name = Name;
         else
-            throw "First Name is invalid";
+            throw "Name is invalid";
     }
 
     get ProfilePhoto() {return this._profilePhoto}
