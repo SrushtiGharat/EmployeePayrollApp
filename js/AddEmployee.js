@@ -14,56 +14,43 @@ window.addEventListener('DOMContentLoaded',(event)=>
     //Event listener for name field
     const name=document.querySelector('#name');
     const nameError=document.querySelector('.name-error');
-            name.addEventListener('input', function(){
-                let nameRegex= new RegExp(/^[A-Z][a-z]{2,}$/);
-                if(nameRegex.test(name.value))
-                nameError.textContent="";
-                else
-                nameError.textContent="Name is Invalid";
-            })
+    name.addEventListener('input', function(){
+        try{
+            (new Employee()).Name = name.value;
+            nameError.textContent="";
+        }
+        catch(e)
+        {
+            nameError.textContent = e; 
+        }
+    });
+    const date=document.querySelector('#date');
+    date.addEventListener('input',function()
+    {
+        const startDate = new Date(document.querySelector('#year').value+"-"+document.querySelector('#month').value+"-"+document.querySelector('#day').value);
+        const dateError = document.querySelector('.date-error');
+        try{
+            (new Employee()).StartDate = startDate;
+            dateError.textContent="";
+        }
+        catch(e)
+        {
+            dateError.textContent = e; 
+        }
+    });
     CheckUpdate();
 });
 
-//Save Employee details
-function save()
+//On press of submit button
+function save(event)
 {
-     let employeeData = CreateEmployeeObject();
-     SaveToLocalStorage(employeeData);       
-}
-
-//Create an object of Employee class
-function CreateEmployeeObject()
-{
-    try{
-
-        let employee = new Employee();
-        employee.Name = document.getElementById('name').value;    
-        let profile = document.getElementsByName('profile');       
-        for(i = 0; i < profile.length; i++)
-        {
-            if(profile[i].checked)
-                employee.ProfilePhoto = profile[i].value;
-        }            
-        let gender = document.getElementsByName('gender');
-        for(i = 0; i < gender.length; i++)
-        {
-            if(gender[i].checked)
-                employee.Gender = gender[i].value;
-        } 
-        let empDepartment = new Array();
-        let department = document.getElementsByName('department');
-        for(i = 0; i < department.length; i++)
-        {
-            if(department[i].checked)
-                empDepartment.push(department[i].value);
-        } 
-        employee.Department = empDepartment;
-        employee.Salary = document.getElementById('salary').value;        
-        let startDate = new Date(document.querySelector('#year').value+"-"+document.querySelector('#month').value+"-"+document.querySelector('#day').value);
-        employee.StartDate = startDate;
-        employee.Notes = document.querySelector('#notes').value;
-
-        return employee;
+    event.preventDefault();
+    event.stopPropagation();
+    try
+    {
+        CreateAndUpdateStorage(); 
+        Reset();  
+        window.location.replace("../pages/HomePage.html")
     }
     catch(e)
     {
@@ -71,24 +58,91 @@ function CreateEmployeeObject()
     }
 }
 
-// Save data to local HTML Storage
-function SaveToLocalStorage(employeeData)
+//// Save data to local HTML Storage
+function CreateAndUpdateStorage()
 {
     let employeeList = JSON.parse(localStorage.getItem("EmployeePayrollList"));
     
     if(employeeList != undefined)
     {
-        employeeData.Id = employeeList.length+1;       
-        employeeList.push(employeeData);
+        let empData = employeeList.find(item=>item._id == empPayrollObject._id);
+        if(!empData)
+        {
+            employeeList.push(CreateNewEmployee());
+        }
+        else
+        {
+            let index = employeeList.map(data=>data._id).indexOf(empData._id);
+            employeeList.splice(index,1,CreateNewEmployee(empData._id)); 
+        }          
     }
     else
     {
-        employeeData.Id = 1;
-        employeeList = [employeeData];
+        employeeList = [CreateNewEmployee()];
     }
     localStorage.setItem("EmployeePayrollList",JSON.stringify(employeeList));
-    alert("Employee added successfully!");
-    Reset();
+}
+
+//Create new employee
+const CreateNewEmployee = (id)=>
+{
+    let employee = new Employee();
+    if(!id)employee.Id = GetNewId();
+    else employee.Id = id;
+    SetEmployeePayrollObject(employee);
+    return employee;
+}
+
+//Set the objects with values from the form
+function SetEmployeePayrollObject(employee)
+{
+    employee.Name = document.getElementById('name').value; 
+    empPayrollObject._name = employee.Name;  
+
+    let profile = document.getElementsByName('profile');       
+    for(i = 0; i < profile.length; i++)
+    {
+        if(profile[i].checked)
+            employee.ProfilePhoto = profile[i].value;
+    }  
+    empPayrollObject._profilePhoto = employee.ProfilePhoto;
+
+    let gender = document.getElementsByName('gender');
+    for(i = 0; i < gender.length; i++)
+    {
+        if(gender[i].checked)
+            employee.Gender = gender[i].value;
+    } 
+    empPayrollObject._gender = employee.Gender;
+
+    let empDepartment = new Array();
+    let department = document.getElementsByName('department');
+    for(i = 0; i < department.length; i++)
+    {
+        if(department[i].checked)
+            empDepartment.push(department[i].value);
+    } 
+    employee.Department = empDepartment;
+    empPayrollObject._department = empDepartment;
+
+    employee.Salary = document.getElementById('salary').value; 
+    empPayrollObject._salary = employee.Salary;
+    
+    let startDate = new Date(document.querySelector('#year').value+"-"+document.querySelector('#month').value+"-"+document.querySelector('#day').value);
+    employee.StartDate = startDate;
+    empPayrollObject._startDate = startDate;
+
+    employee.Notes = document.querySelector('#notes').value;
+    empPayrollObject._notes = employee.Notes; 
+}
+
+//Get id method
+function GetNewId()
+{
+    let empId = localStorage.getItem('EmployeeID');
+    empId = !empId ? 1:(parseInt(empId)+1).toString();
+    localStorage.setItem('EmployeeID',empId);
+    return empId;
 }
 
 //Reset form on click of reset button
