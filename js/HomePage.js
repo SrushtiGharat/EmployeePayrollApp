@@ -1,10 +1,12 @@
 let employeePayrollList;
+
 //Event listener when HTML page contents are loaded
 window.addEventListener('DOMContentLoaded',(event)=>
     {
         employeePayrollList = GetEmployeeDataLocalStorage();
         document.querySelector('.emp-count').textContent = employeePayrollList.length;
         CreateInnerHTML();
+        localStorage.removeItem('EditEmployee');
     }
 );
 
@@ -42,13 +44,22 @@ function CreateInnerHTML()
 //Remove employee from table
 function remove(node)
 {
-    let empData = employeePayrollList.find(emp=>emp._id == node._id);
+    let empData = employeePayrollList.find(emp=>emp._id == node.id);
     if(!empData) return;
     let index = employeePayrollList.map(emp=>emp._id).indexOf(empData._id);
     employeePayrollList.splice(index,1);
     localStorage.setItem('EmployeePayrollList',JSON.stringify(employeePayrollList));
     document.querySelector('.emp-count').textContent = employeePayrollList.length;
     CreateInnerHTML();
+}
+
+//Update data
+function update(node)
+{
+    let empData = employeePayrollList.find(emp=>emp._id == node.id);
+    if(!empData) return;
+    localStorage.setItem('EditEmployee',JSON.stringify(empData));
+    window.location.replace("../pages/AddEmployeeForm.html");
 }
 
 //Get departments for a employee to display on HTML page
@@ -69,31 +80,3 @@ function GetDate(startDate)
     let date = new Date(startDate);
     return date.getDate()+" "+month[date.getMonth()]+" "+date.getFullYear();
 }
-
-// //JSON file for Employee Payroll Data
-// function CreateEmployeePayrollJSON()
-// {
-//     let empPayrollList = [
-//         {
-//             _name:'Ram',
-//             _gender:'Male',
-//             _department:['Finance','Sales'],
-//             _salary:'350000',
-//             _startDate:'29 October 2019',
-//             _notes:'',
-//             _profilePhoto:'../assets/profile-images/Ellipse -2.png',
-//             _id:new Date().getTime()
-//         },
-//         {
-//             _name:'Seeta',
-//             _gender:'Female',
-//             _department:['Sales'],
-//             _salary:'450000',
-//             _startDate:'12 January 2018',
-//             _notes:'',
-//             _profilePhoto:'../assets/profile-images/Ellipse -1.png',
-//             _id:new Date().getTime()
-//         }
-//     ]
-//     return empPayrollList;
-// }
