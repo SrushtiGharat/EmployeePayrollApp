@@ -36,6 +36,19 @@
       "notes": "",
       "profilePhoto": "../assets/profile-images/Ellipse -1.png",
       "id": 3
+    },
+    {
+      "name": "Srushti",
+      "profilePhoto": "../assets/profile-images/Ellipse -1.png",
+      "gender": "Female",
+      "department": [
+        "Finance",
+        "Engineer"
+      ],
+      "salary": "461200",
+      "startDate": "2019-08-21T18:30:00.000Z",
+      "notes": "ddd",
+      "id": 4
     }
   ]
 }

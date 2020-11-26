@@ -49,9 +49,16 @@ function save(event)
     try
     {
         SetEmployeePayrollObject();
-        CreateAndUpdateStorage(); 
-        Reset();  
-        window.location.replace(site_properties.home_page);
+        if(site_properties.use_local_storage.match("true"))
+        {
+            CreateAndUpdateStorage(); 
+            Reset();  
+            window.location.replace(site_properties.home_page);
+        }
+        else
+        {
+            CreateAndUpdateServer();
+        }
     }
     catch(e)
     {
@@ -84,6 +91,26 @@ function CreateAndUpdateStorage()
     localStorage.setItem("EmployeePayrollList",JSON.stringify(employeeList));
 }
 
+//Create and Update server
+function CreateAndUpdateServer()
+{
+    let postURL = site_properties.server_url;
+    let methodCall = "POST";
+    if(isUpdate)
+    {
+        methodCall = "PUT";
+        postURL = postURL+empPayrollObject.id.toString();
+    }
+    makeServiceCall(methodCall,postURL,true,empPayrollObject)
+        .then(responseText =>{
+            Reset();
+            window.location.replace(site_properties.home_page);
+        })
+        .catch(error=>{
+            throw error;
+        });
+}
+
 //Set the objects with values from the form
 function SetEmployeePayrollObject()
 {
@@ -91,20 +118,20 @@ function SetEmployeePayrollObject()
     {
         empPayrollObject.id = GetNewId();
     }
-    empPayrollObject._name = document.getElementById('name').value; 
+    empPayrollObject.name = document.getElementById('name').value; 
 
     let profile = document.getElementsByName('profile');       
     for(i = 0; i < profile.length; i++)
     {
         if(profile[i].checked)
-            empPayrollObject._profilePhoto = profile[i].value;
+            empPayrollObject.profilePhoto = profile[i].value;
     }  
    
     let gender = document.getElementsByName('gender');
     for(i = 0; i < gender.length; i++)
     {
         if(gender[i].checked)
-            empPayrollObject._gender = gender[i].value;
+            empPayrollObject.gender = gender[i].value;
     } 
 
     let empDepartment = new Array();
@@ -114,13 +141,13 @@ function SetEmployeePayrollObject()
         if(department[i].checked)
             empDepartment.push(department[i].value);
     } 
-    empPayrollObject._department = empDepartment;
+    empPayrollObject.department = empDepartment;
 
-    empPayrollObject._salary = document.getElementById('salary').value; 
+    empPayrollObject.salary = document.getElementById('salary').value; 
     
     let startDate = new Date(document.querySelector('#year').value+"-"+document.querySelector('#month').value+"-"+document.querySelector('#day').value);
-    empPayrollObject._startDate = startDate;
-    empPayrollObject._notes = document.querySelector('#notes').value;; 
+    empPayrollObject.startDate = startDate;
+    empPayrollObject.notes = document.querySelector('#notes').value;; 
 }
 
 //Get id method
@@ -161,15 +188,15 @@ function CheckUpdate()
 //Set the form if update is true
 function SetForm()
 {
-    document.querySelector('#name').value = empPayrollObject._name;
+    document.querySelector('#name').value = empPayrollObject.name;
     document.querySelector('.name-error').textContent = '';
-    SetSelectedValues('[name=profile]',empPayrollObject._profilePhoto);
-    SetSelectedValues('[name=gender]',empPayrollObject._gender);
-    SetSelectedValues('[name=department]',empPayrollObject._department);
-    document.querySelector('#salary').value = empPayrollObject._salary;
-    document.querySelector('.salary-output-text').value = empPayrollObject._salary;
-    document.querySelector('#notes').value = empPayrollObject._notes;
-    SetDate(empPayrollObject._startDate);
+    SetSelectedValues('[name=profile]',empPayrollObject.profilePhoto);
+    SetSelectedValues('[name=gender]',empPayrollObject.gender);
+    SetSelectedValues('[name=department]',empPayrollObject.department);
+    document.querySelector('#salary').value = empPayrollObject.salary;
+    document.querySelector('.salary-output-text').value = empPayrollObject.salary;
+    document.querySelector('#notes').value = empPayrollObject.notes;
+    SetDate(empPayrollObject.startDate);
 }
 
 function SetSelectedValues(property,value)
