@@ -1,52 +1,41 @@
 {
   "employee": [
     {
-      "name": "mohit kumar new",
-      "gender": "male",
+      "name": "Mohit Kumar",
+      "gender": "Male",
       "departMent": [
         "HR"
       ],
       "salary": "30000",
-      "startDate": "1 Jan 2020",
+      "startDate": "1 January 2020",
       "notes": "",
-      "id": 1604589551457,
+      "id": 1,
       "profileUrl": "../assets/profile-images/Ellipse 1.png"
     },
     {
-      "name": "mohit kumar test",
-      "gender": "male",
+      "name": "Ram Verma",
+      "gender": "Male",
       "departMent": [
-        "HR"
+        "HR",
+        "Sales"
       ],
-      "salary": "30000",
-      "startDate": "1 Jan 2020",
+      "salary": "40000",
+      "startDate": "4 February 2020",
       "notes": "",
-      "id": 1604589594363,
-      "profileUrl": "../assets/profile-images/Ellipse 1.png"
+      "id": 2,
+      "profileUrl": "../assets/profile-images/Ellipse 7.png"
     },
     {
-      "name": "mohit",
-      "gender": "male",
+      "name": "Riya Rao",
+      "gender": "Female",
       "departMent": [
-        "HR"
+        "Finance"
       ],
-      "salary": "30000",
-      "startDate": "1 Jan 2020",
+      "salary": "60000",
+      "startDate": "1 June 2020",
       "notes": "",
-      "id": 1604589699566,
-      "profileUrl": "../assets/profile-images/Ellipse -3.png"
-    },
-    {
-      "name": "test",
-      "gender": "male",
-      "departMent": [
-        "HR"
-      ],
-      "salary": "30000",
-      "startDate": "1 Jan 2020",
-      "notes": "",
-      "id": 1604589731061,
-      "profileUrl": "../assets/profile-images/Ellipse -3.png"
+      "profileUrl": "../assets/profile-images/Ellipse 1.png",
+      "id": 3
     }
   ]
 }
