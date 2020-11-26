@@ -1,18 +1,6 @@
 {
   "employee": [
     {
-      "name": "Mohit Kumar",
-      "gender": "Male",
-      "department": [
-        "HR"
-      ],
-      "salary": "30000",
-      "startDate": "1 January 2020",
-      "notes": "",
-      "id": 1,
-      "profilePhoto": "../assets/profile-images/Ellipse -5.png"
-    },
-    {
       "name": "Ram Verma",
       "gender": "Male",
       "department": [
@@ -42,12 +30,12 @@
       "profilePhoto": "../assets/profile-images/Ellipse -1.png",
       "gender": "Female",
       "department": [
-        "Finance",
-        "Engineer"
+        "Sales",
+        "Finance"
       ],
-      "salary": "461200",
-      "startDate": "2019-08-21T18:30:00.000Z",
-      "notes": "ddd",
+      "salary": "438600",
+      "startDate": "2019-08-16T18:30:00.000Z",
+      "notes": "sss",
       "id": 4
     }
   ]
