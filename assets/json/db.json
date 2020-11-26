@@ -3,19 +3,19 @@
     {
       "name": "Mohit Kumar",
       "gender": "Male",
-      "departMent": [
+      "department": [
         "HR"
       ],
       "salary": "30000",
       "startDate": "1 January 2020",
       "notes": "",
       "id": 1,
-      "profileUrl": "../assets/profile-images/Ellipse 1.png"
+      "profilePhoto": "../assets/profile-images/Ellipse -5.png"
     },
     {
       "name": "Ram Verma",
       "gender": "Male",
-      "departMent": [
+      "department": [
         "HR",
         "Sales"
       ],
@@ -23,18 +23,18 @@
       "startDate": "4 February 2020",
       "notes": "",
       "id": 2,
-      "profileUrl": "../assets/profile-images/Ellipse 7.png"
+      "profilePhoto": "../assets/profile-images/Ellipse -8.png"
     },
     {
       "name": "Riya Rao",
       "gender": "Female",
-      "departMent": [
+      "department": [
         "Finance"
       ],
       "salary": "60000",
       "startDate": "1 June 2020",
       "notes": "",
-      "profileUrl": "../assets/profile-images/Ellipse 1.png",
+      "profilePhoto": "../assets/profile-images/Ellipse -1.png",
       "id": 3
     }
   ]

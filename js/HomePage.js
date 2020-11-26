@@ -3,18 +3,45 @@ let employeePayrollList;
 //Event listener when HTML page contents are loaded
 window.addEventListener('DOMContentLoaded',(event)=>
     {
-        employeePayrollList = GetEmployeeDataLocalStorage();
-        document.querySelector('.emp-count').textContent = employeePayrollList.length;
-        CreateInnerHTML();
-        localStorage.removeItem('EditEmployee');
+        if(site_properties.use_local_storage.match("true"))
+        {
+            GetEmployeeDataLocalStorage();
+        }
+        else
+        {
+            GetEmployeeDataServer();
+        }
     }
 );
 
 //Get data from local storage
 function GetEmployeeDataLocalStorage()
 {
-    return localStorage.getItem('EmployeePayrollList')?
+    employeePayrollList = localStorage.getItem('EmployeePayrollList')?
                     JSON.parse(localStorage.getItem('EmployeePayrollList')):[];
+    ProcessResponse();
+}
+
+//Get data from Json Server
+function GetEmployeeDataServer()
+{
+    makeServiceCall("GET", site_properties.server_url, true)
+            .then(responseText => {
+                employeePayrollList = JSON.parse(responseText);
+                ProcessResponse();
+            })
+            .catch(error => {
+                console.log("GET Error Status: " + JSON.stringify(error));
+                employeePayrollList = [];
+                ProcessResponse();
+            });
+}
+
+function ProcessResponse()
+{
+    document.querySelector(".emp-count").textContent = employeePayrollList.length;
+    localStorage.removeItem('EditEmployee');
+    CreateInnerHTML();
 }
 
 //Insert content to the html table using js
@@ -26,12 +53,12 @@ function CreateInnerHTML()
     {
         innerHTML = `${innerHTML}       
         <tr>
-        <td><img class="profile" alt = "" src="${employeePayrollData._profilePhoto}"></td>
-        <td>${employeePayrollData._name}</td>
-        <td>${employeePayrollData._gender}</td>
-        <td>${GetDepartment(employeePayrollData._department)}</td>
-        <td>${employeePayrollData._salary}</td>
-        <td>${GetDate(employeePayrollData._startDate)}</td>
+        <td><img class="profile" alt = "" src="${employeePayrollData.profilePhoto}"></td>
+        <td>${employeePayrollData.name}</td>
+        <td>${employeePayrollData.gender}</td>
+        <td>${GetDepartment(employeePayrollData.department)}</td>
+        <td>${employeePayrollData.salary}</td>
+        <td>${GetDate(employeePayrollData.startDate)}</td>
         <td>
             <img id="${employeePayrollData.id}" onclick="remove(this)" alt="delete" src="../assets/icons/delete-black-18dp.svg">
             <img id="${employeePayrollData.id}" onclick="update(this)" alt="edit" src="../assets/icons/create-black-18dp.svg">
