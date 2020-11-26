@@ -16,7 +16,7 @@ window.addEventListener('DOMContentLoaded',(event)=>
     const nameError=document.querySelector('.name-error');
     name.addEventListener('input', function(){
         try{
-            (new Employee()).Name = name.value;
+            checkName(name.value);
             nameError.textContent="";
         }
         catch(e)
@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded',(event)=>
         const startDate = new Date(document.querySelector('#year').value+"-"+document.querySelector('#month').value+"-"+document.querySelector('#day').value);
         const dateError = document.querySelector('.date-error');
         try{
-            (new Employee()).StartDate = startDate;
+            checkStartDate(startDate.value);
             dateError.textContent="";
         }
         catch(e)
@@ -48,9 +48,10 @@ function save(event)
     event.stopPropagation();
     try
     {
+        SetEmployeePayrollObject();
         CreateAndUpdateStorage(); 
         Reset();  
-        window.location.replace("../pages/HomePage.html")
+        window.location.replace(site_properties.home_page);
     }
     catch(e)
     {
@@ -65,55 +66,46 @@ function CreateAndUpdateStorage()
     
     if(employeeList != undefined)
     {
-        let empData = employeeList.find(item=>item._id == empPayrollObject._id);
+        let empData = employeeList.find(item=>item.id == empPayrollObject.id);
         if(!empData)
         {
-            employeeList.push(CreateNewEmployee());
+            employeeList.push(empPayrollObject);
         }
         else
         {
-            let index = employeeList.map(data=>data._id).indexOf(empData._id);
-            employeeList.splice(index,1,CreateNewEmployee(empData._id)); 
+            let index = employeeList.map(data=>data.id).indexOf(empData.id);
+            employeeList.splice(index,1,empPayrollObject); 
         }          
     }
     else
     {
-        employeeList = [CreateNewEmployee()];
+        employeeList = [empPayrollObject];
     }
     localStorage.setItem("EmployeePayrollList",JSON.stringify(employeeList));
 }
 
-//Create new employee
-const CreateNewEmployee = (id)=>
-{
-    let employee = new Employee();
-    if(!id)employee.Id = GetNewId();
-    else employee.Id = id;
-    SetEmployeePayrollObject(employee);
-    return employee;
-}
-
 //Set the objects with values from the form
-function SetEmployeePayrollObject(employee)
+function SetEmployeePayrollObject()
 {
-    employee.Name = document.getElementById('name').value; 
-    empPayrollObject._name = employee.Name;  
+    if(!isUpdate && site_properties.use_local_storage.match("true"))
+    {
+        empPayrollObject.id = GetNewId();
+    }
+    empPayrollObject._name = document.getElementById('name').value; 
 
     let profile = document.getElementsByName('profile');       
     for(i = 0; i < profile.length; i++)
     {
         if(profile[i].checked)
-            employee.ProfilePhoto = profile[i].value;
+            empPayrollObject._profilePhoto = profile[i].value;
     }  
-    empPayrollObject._profilePhoto = employee.ProfilePhoto;
-
+   
     let gender = document.getElementsByName('gender');
     for(i = 0; i < gender.length; i++)
     {
         if(gender[i].checked)
-            employee.Gender = gender[i].value;
+            empPayrollObject._gender = gender[i].value;
     } 
-    empPayrollObject._gender = employee.Gender;
 
     let empDepartment = new Array();
     let department = document.getElementsByName('department');
@@ -122,18 +114,13 @@ function SetEmployeePayrollObject(employee)
         if(department[i].checked)
             empDepartment.push(department[i].value);
     } 
-    employee.Department = empDepartment;
     empPayrollObject._department = empDepartment;
 
-    employee.Salary = document.getElementById('salary').value; 
-    empPayrollObject._salary = employee.Salary;
+    empPayrollObject._salary = document.getElementById('salary').value; 
     
     let startDate = new Date(document.querySelector('#year').value+"-"+document.querySelector('#month').value+"-"+document.querySelector('#day').value);
-    employee.StartDate = startDate;
     empPayrollObject._startDate = startDate;
-
-    employee.Notes = document.querySelector('#notes').value;
-    empPayrollObject._notes = employee.Notes; 
+    empPayrollObject._notes = document.querySelector('#notes').value;; 
 }
 
 //Get id method

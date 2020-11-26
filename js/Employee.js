@@ -1,8 +1,6 @@
 class Employee
 {
-    get Id(){return this._id}
-    set Id(Id)
-    {this._id = Id;}
+    id;
 
     get Name() {return this._name}
     set Name(Name) 

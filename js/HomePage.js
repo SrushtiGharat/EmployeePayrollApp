@@ -33,8 +33,8 @@ function CreateInnerHTML()
         <td>${employeePayrollData._salary}</td>
         <td>${GetDate(employeePayrollData._startDate)}</td>
         <td>
-            <img id="${employeePayrollData._id}" onclick="remove(this)" alt="delete" src="../assets/icons/delete-black-18dp.svg">
-            <img id="${employeePayrollData._id}" onclick="update(this)" alt="edit" src="../assets/icons/create-black-18dp.svg">
+            <img id="${employeePayrollData.id}" onclick="remove(this)" alt="delete" src="../assets/icons/delete-black-18dp.svg">
+            <img id="${employeePayrollData.id}" onclick="update(this)" alt="edit" src="../assets/icons/create-black-18dp.svg">
         </td>
         </tr>`;
     }
@@ -44,9 +44,9 @@ function CreateInnerHTML()
 //Remove employee from table
 function remove(node)
 {
-    let empData = employeePayrollList.find(emp=>emp._id == node.id);
+    let empData = employeePayrollList.find(emp=>emp.id == node.id);
     if(!empData) return;
-    let index = employeePayrollList.map(emp=>emp._id).indexOf(empData._id);
+    let index = employeePayrollList.map(emp=>emp.id).indexOf(empData.id);
     employeePayrollList.splice(index,1);
     localStorage.setItem('EmployeePayrollList',JSON.stringify(employeePayrollList));
     document.querySelector('.emp-count').textContent = employeePayrollList.length;
@@ -56,10 +56,10 @@ function remove(node)
 //Update data
 function update(node)
 {
-    let empData = employeePayrollList.find(emp=>emp._id == node.id);
+    let empData = employeePayrollList.find(emp=>emp.id == node.id);
     if(!empData) return;
     localStorage.setItem('EditEmployee',JSON.stringify(empData));
-    window.location.replace("../pages/AddEmployeeForm.html");
+    window.location.replace(site_properties.add_emp_payroll_page);
 }
 
 //Get departments for a employee to display on HTML page
