@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded',(event)=>
         const startDate = new Date(document.querySelector('#year').value+"-"+document.querySelector('#month').value+"-"+document.querySelector('#day').value);
         const dateError = document.querySelector('.date-error');
         try{
-            checkStartDate(startDate.value);
+            checkStartDate(startDate);
             dateError.textContent="";
         }
         catch(e)
